@@ -39,3 +39,11 @@ class DateIterator(val dateRange: DateRange) : Iterator<MyDate> {
         return result
     }
 }
+
+operator fun MyDate.plus(timeInterval: TimeInterval) = addTimeIntervals(timeInterval, 1)
+
+operator fun MyDate.plus(repeatedTimeInterval: RepeatedTimeInterval) = addTimeIntervals(repeatedTimeInterval.timeInterval, repeatedTimeInterval.times)
+
+class RepeatedTimeInterval(val timeInterval: TimeInterval, val times : Int)
+
+operator fun TimeInterval.times(times: Int) = RepeatedTimeInterval(this, times)
