@@ -20,6 +20,17 @@ fun task41(): Nothing = TODO(
         }
 )
 
+fun <T, M : MutableCollection<T>> Collection<T>.partitionTo(first: M, second: M, predicate: (T) -> Boolean): Pair<M, M> {
+    for (element in this) {
+        if (predicate(element)) {
+            first.add(element)
+        } else {
+            second.add(element)
+        }
+    }
+    return Pair(first, second)
+}
+
 fun List<String>.partitionWordsAndLines(): Pair<List<String>, List<String>> {
     return partitionTo(ArrayList<String>(), ArrayList()) { s -> !s.contains(" ") }
 }
@@ -28,24 +39,31 @@ fun Set<Char>.partitionLettersAndOtherSymbols(): Pair<Set<Char>, Set<Char>> {
     return partitionTo(HashSet<Char>(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z'}
 }
 
-fun List<String>.partitionTo(first: MutableList<String>, second: MutableList<String>, predicate: (String) -> Boolean) : Pair<List<String>, List<String>>{
-    for (element in this){
-        if( predicate.invoke(element) ){
-            first.add(element)
-        }else{
-            second.add(element)
-        }
-    }
-    return Pair(first, second)
-}
+/* Not required after generics
 
-fun Set<Char>.partitionTo(first: MutableSet<Char>, second: MutableSet<Char>, predicate: (Char) -> Boolean) : Pair<Set<Char>, Set<Char>>{
-    for (element in this){
-        if( predicate.invoke(element) ){
+fun List<String>.partitionTo(first: MutableList<String>, second: MutableList<String>, predicate: (String) -> Boolean): Pair<List<String>, List<String>> {
+    for (element in this) {
+        if (predicate.invoke(element)) {
             first.add(element)
-        }else{
+        } else {
             second.add(element)
         }
     }
     return Pair(first, second)
 }
+*/
+
+
+/* Not required after generics
+
+fun Set<Char>.partitionTo(first: MutableSet<Char>, second: MutableSet<Char>, predicate: (Char) -> Boolean): Pair<Set<Char>, Set<Char>> {
+    for (element in this) {
+        if (predicate.invoke(element)) {
+            first.add(element)
+        } else {
+            second.add(element)
+        }
+    }
+    return Pair(first, second)
+}
+*/
